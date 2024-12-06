@@ -1,5 +1,6 @@
 package menu.controller;
 
+import java.util.List;
 import menu.common.Constants;
 import menu.domain.MenuGenerator;
 import menu.domain.Menus;
@@ -13,15 +14,19 @@ public class MenuPickerController {
 
     public void run() {
         String input = requireInput();
-        Menus asianMenus = generateMenus(Constants.)
+        Menus asianMenus = generateMenus(Constants.ASIAN_PATH);
+        Menus chineseMenus = generateMenus(Constants.CHINESE_PATH);
+        Menus japaneseMenus = generateMenus(Constants.JAPANESE_PATH);
+        Menus koreanMenus = generateMenus(Constants.KOREAN_PATH);
+        Menus westernMenus = generateMenus(Constants.WESTERN_PATH);
     }
 
     public Menus generateMenus(String filePath) {
         return menuGenerator.generateMenu(filePath);
     }
 
-    private String requireInput() {
-        outputView.printPrompt();
-        return inputView.readInput();
+    private List<String> requireCoachNames() {
+        outputView.printCoachNamesPrompt();
+        return inputView.readCoachNames();
     }
 }
