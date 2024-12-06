@@ -27,6 +27,17 @@ public class MenuGenerator {
         return menus;
     }
 
+    public Menus generateMenuFromString(List<String> input) {
+        Menus menus = new Menus();
+        for (String s : input) {
+            Menu menu = menus.findMenu(s);
+            if (menu!=null) {
+                menus.addMenu(menu);
+            }
+        }
+        return menus;
+    }
+
     private Map<String, List<String>> parseFromFile(final String filePath) {
         List<String> parsedFile = Arrays.asList(fileParser.parseFromFile(filePath).get(0).split(":"));
         Map<String, List<String>> parsedFromFile = new HashMap<>();

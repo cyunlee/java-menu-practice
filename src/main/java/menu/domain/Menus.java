@@ -12,6 +12,15 @@ public class Menus implements Iterable<Menu> {
         return menus;
     }
 
+    public Menu findMenu(String name) {
+        for (Menu menu : menus) {
+            if (menu.isMenuExist(name)) {
+                return menu;
+            }
+        }
+        return null;
+    }
+
     public int getSize() {
         return menus.size();
     }

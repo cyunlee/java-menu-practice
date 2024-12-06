@@ -12,6 +12,10 @@ public class Coaches implements Iterable<Coach> {
         return coaches;
     }
 
+    public int getNumberOfCoaches() {
+        return coaches.size();
+    }
+
     @Override
     public Iterator<Coach> iterator() {
         return coaches.iterator();

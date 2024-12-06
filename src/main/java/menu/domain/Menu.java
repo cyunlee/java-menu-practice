@@ -8,4 +8,15 @@ public class Menu {
         this.category = category;
         this.name = name;
     }
+
+    public boolean isMenuExist(String name) {
+        if (this.name.equals(name)) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }
