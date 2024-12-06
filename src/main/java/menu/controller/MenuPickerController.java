@@ -52,23 +52,23 @@ public class MenuPickerController {
 
         for (String randomCategory : randomCategories) {
             if (asianMenus.isCategoryMatched(randomCategory)) { //아시안 카테고리에서 하나 고르기!
-
+                coaches.pickOneRandomMenuForAll(asianMenus);
             }
 
             if (chineseMenus.isCategoryMatched(randomCategory)) {
-
+                coaches.pickOneRandomMenuForAll(asianMenus);
             }
 
             if (japaneseMenus.isCategoryMatched(randomCategory)) {
-
+                coaches.pickOneRandomMenuForAll(asianMenus);
             }
 
             if (koreanMenus.isCategoryMatched(randomCategory)) {
-
+                coaches.pickOneRandomMenuForAll(asianMenus);
             }
 
             if (westernMenus.isCategoryMatched(randomCategory)) {
-
+                coaches.pickOneRandomMenuForAll(asianMenus);
             }
         }
     }

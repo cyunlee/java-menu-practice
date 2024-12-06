@@ -19,12 +19,14 @@ public class Coach {
         this.menusCantEat = menus;
     }
 
-    public Menu pickOneRandomMenu(Menus menus) {
+    public void pickOneRandomMenu(Menus menus) {
         Menu randomMenu = menus.getRandomMenu();
         if (doesCoachCanEat(randomMenu)) {
-            return randomMenu;
+            this.randomMenus.addMenu(randomMenu);
         }
-        return pickOneRandomMenu(menus);
+        if (!doesCoachCanEat(randomMenu)) {
+            pickOneRandomMenu(menus);
+        }
     }
 
     private boolean doesCoachCanEat(Menu menu) {

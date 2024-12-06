@@ -12,6 +12,12 @@ public class Coaches implements Iterable<Coach> {
         return coaches;
     }
 
+    public void pickOneRandomMenuForAll(Menus menus) {
+        for (Coach coach : coaches) {
+            coach.pickOneRandomMenu(menus);
+        }
+    }
+
     public int getNumberOfCoaches() {
         return coaches.size();
     }
