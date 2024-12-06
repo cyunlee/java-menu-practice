@@ -24,7 +24,7 @@ public class Coach {
         if (doesCoachCanEat(randomMenu)) {
             this.randomMenus.addMenu(randomMenu);
         }
-        if (!doesCoachCanEat(randomMenu)) {
+        if (!doesCoachCanEat(randomMenu) || randomMenus.alreadyContainsMenu(randomMenu)) {
             pickOneRandomMenu(menus);
         }
     }

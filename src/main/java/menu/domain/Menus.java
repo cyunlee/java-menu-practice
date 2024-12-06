@@ -43,6 +43,13 @@ public class Menus implements Iterable<Menu> {
         return menus.get(randomIdx);
     }
 
+    public boolean alreadyContainsMenu(Menu menu) {
+        if (menus.contains(menu)) {
+            return true;
+        }
+        return false;
+    }
+
     private String getCategory() {
         return menus.get(0).getCategory();
     }
