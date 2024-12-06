@@ -5,9 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.stream.Collectors;
 
 public class Menus implements Iterable<Menu> {
-    private List<Menu> menus;
+    private List<Menu> menus = new ArrayList<>();
 
     public Menus() {
 
@@ -22,13 +23,17 @@ public class Menus implements Iterable<Menu> {
         return menus;
     }
 
-    public Menu findMenu(String name) {
+    public Menu findMenuByName(String name) {
         for (Menu menu : menus) {
-            if (menu.isMenuExist(name)) {
+            if (name!=null && menu.isMenuExist(name)) {
                 return menu;
             }
         }
         return null;
+    }
+
+    public Menu findMenuByIndex(int idx) {
+        return menus.get(idx);
     }
 
     public boolean isCategoryMatched(String category) {
@@ -38,9 +43,9 @@ public class Menus implements Iterable<Menu> {
         return false;
     }
 
-    public Menu getRandomMenu() {
-        int randomIdx = Randoms.pickNumberInRange(0, menus.size()-1);
-        return menus.get(randomIdx);
+    public String getRandomMenu() {
+        List<String> menusForRandom = menus.stream().map(Menu::getName).collect(Collectors.toList());
+        return Randoms.shuffle(menusForRandom).get(0);
     }
 
     public boolean alreadyContainsMenu(Menu menu) {
@@ -50,8 +55,22 @@ public class Menus implements Iterable<Menu> {
         return false;
     }
 
+    public List<String> getCategories() {
+        List<String> categories = new ArrayList<>();
+
+        for (Menu menu : menus) {
+            categories.add(menu.getCategory());
+        }
+
+        return categories;
+    }
+
     private String getCategory() {
         return menus.get(0).getCategory();
+    }
+
+    public void removeMenu(Menu menu){
+        menus.remove(menu);
     }
 
     @Override

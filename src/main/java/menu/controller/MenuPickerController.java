@@ -1,5 +1,7 @@
 package menu.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import menu.common.Constants;
 import menu.domain.Coach;
@@ -17,23 +19,37 @@ public class MenuPickerController {
     private final CoachGenerator coachGenerator = new CoachGenerator();
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
+    private Menus asianMenus;
+    private Menus chineseMenus;
+    private Menus japaneseMenus;
+    private Menus koreanMenus;
+    private Menus westernMenus;
 
     public void run() {
         start();
+        asianMenus = generateMenus(Constants.ASIAN_PATH);
+        chineseMenus = generateMenus(Constants.CHINESE_PATH);
+        japaneseMenus = generateMenus(Constants.JAPANESE_PATH);
+        koreanMenus = generateMenus(Constants.KOREAN_PATH);
+        westernMenus = generateMenus(Constants.WESTERN_PATH);
+        List<Menus> allMenus = Arrays.asList(asianMenus, chineseMenus, japaneseMenus, koreanMenus, westernMenus);
         Coaches coaches = generateCoaches(requireCoachNames());
         for (Coach coach : coaches) {
             List<String> menusCoachCantEat = requireMenusCoachCantEat(coach.getName());
-            Menus menusCantEat = menuGenerator.generateMenuFromString(menusCoachCantEat);
-            coach.modifyMenusCantEat(menusCantEat);
+            if (menusCoachCantEat!=null) {
+                Menus menusCantEat = menuGenerator.generateMenuFromString(menusCoachCantEat, allMenus);
+                coach.modifyMenusCantEat(menusCantEat);
+            }
         }
-        showMenuPickerResult();
+        processMenuPicker(coaches);
+        showMenuPickerResult(findCategories(coaches), coaches);
     }
 
-    public Menus generateMenus(String filePath) {
+    private Menus generateMenus(String filePath) {
         return menuGenerator.generateMenu(filePath);
     }
 
-    public Coaches generateCoaches(List<String> coachNames) {
+    private Coaches generateCoaches(List<String> coachNames) {
         return coachGenerator.generateCoaches(coachNames);
     }
 
@@ -44,11 +60,7 @@ public class MenuPickerController {
     private void processMenuPicker(Coaches coaches) {
         MenuPicker menuPicker = new MenuPicker();
         List<String> randomCategories = menuPicker.pickRandomCategories(); // 양식 일식 한식 중식 중식
-        Menus asianMenus = generateMenus(Constants.ASIAN_PATH);
-        Menus chineseMenus = generateMenus(Constants.CHINESE_PATH);
-        Menus japaneseMenus = generateMenus(Constants.JAPANESE_PATH);
-        Menus koreanMenus = generateMenus(Constants.KOREAN_PATH);
-        Menus westernMenus = generateMenus(Constants.WESTERN_PATH);
+
 
         for (String randomCategory : randomCategories) {
             if (asianMenus.isCategoryMatched(randomCategory)) { //아시안 카테고리에서 하나 고르기!
@@ -56,21 +68,26 @@ public class MenuPickerController {
             }
 
             if (chineseMenus.isCategoryMatched(randomCategory)) {
-                coaches.pickOneRandomMenuForAll(asianMenus);
+                coaches.pickOneRandomMenuForAll(chineseMenus);
             }
 
             if (japaneseMenus.isCategoryMatched(randomCategory)) {
-                coaches.pickOneRandomMenuForAll(asianMenus);
+                coaches.pickOneRandomMenuForAll(japaneseMenus);
             }
 
             if (koreanMenus.isCategoryMatched(randomCategory)) {
-                coaches.pickOneRandomMenuForAll(asianMenus);
+                coaches.pickOneRandomMenuForAll(koreanMenus);
             }
 
             if (westernMenus.isCategoryMatched(randomCategory)) {
-                coaches.pickOneRandomMenuForAll(asianMenus);
+                coaches.pickOneRandomMenuForAll(westernMenus);
             }
         }
+    }
+
+    private List<String> findCategories(Coaches coaches) {
+        Coach coach = coaches.findCoachByIdx(0);
+        return coach.getCategories();
     }
 
     private List<String> requireCoachNames() {
@@ -80,10 +97,10 @@ public class MenuPickerController {
 
     private List<String> requireMenusCoachCantEat(String coachName) {
         outputView.printCantEatMenus(coachName);
-        return inputView.cantEatMenu();
+        return inputView.readCantEatMenu();
     }
 
-    private void showMenuPickerResult(List<String> categories, ) {
-        outputView.printResult();
+    private void showMenuPickerResult(List<String> categories, Coaches coaches) {
+        outputView.printResult(categories, coaches);
     }
 }

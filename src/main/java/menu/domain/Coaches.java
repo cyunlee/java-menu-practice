@@ -18,6 +18,10 @@ public class Coaches implements Iterable<Coach> {
         }
     }
 
+    public Coach findCoachByIdx(int idx) {
+        return coaches.get(idx);
+    }
+
     public int getNumberOfCoaches() {
         return coaches.size();
     }

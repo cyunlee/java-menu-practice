@@ -14,9 +14,16 @@ public class InputView {
         return inputParser.parseInput(input);
     }
 
-    public List<String> cantEatMenu() {
-        String input = Console.readLine();
-        return inputParser.parseInput(input);
+    public List<String> readCantEatMenu() {
+        try {
+            String input = Console.readLine();
+            inputValidator.validateInput(input);
+            return inputParser.parseInput(input);
+        }catch(IllegalArgumentException exception) {
+            OutputView.printError(exception.getMessage());
+            return readCantEatMenu();
+        }
+
     }
 
 

@@ -1,11 +1,11 @@
 package menu.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import java.util.List;
 
 public class Coach {
     private String name;
     private Menus menusCantEat;
-    private Menus randomMenus;
+    private Menus randomMenus = new Menus();
 
     public Coach(String name) {
         this.name = name;
@@ -20,21 +20,35 @@ public class Coach {
     }
 
     public void pickOneRandomMenu(Menus menus) {
-        Menu randomMenu = menus.getRandomMenu();
-        if (doesCoachCanEat(randomMenu)) {
-            this.randomMenus.addMenu(randomMenu);
+        String randomMenu = menus.getRandomMenu();
+        Menu menu = menus.findMenuByName(randomMenu);
+        if (doesCoachCanEat(menu)) {
+            randomMenus.addMenu(menu);
         }
-        if (!doesCoachCanEat(randomMenu) || randomMenus.alreadyContainsMenu(randomMenu)) {
-            pickOneRandomMenu(menus);
-        }
+        menus.removeMenu(menu);
     }
 
     private boolean doesCoachCanEat(Menu menu) {
         for (Menu menuCanEat : menusCantEat) {
-            if (!menuCanEat.equals(menu)) {
+            if (menuCanEat!=null && !menuCanEat.equals(menu)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public List<String> getCategories() {
+        return randomMenus.getCategories();
+    }
+
+    @Override
+    public String toString() {
+        String mon = randomMenus.findMenuByIndex(0).getName();
+        String tue = randomMenus.findMenuByIndex(1).getName();
+        String wed = randomMenus.findMenuByIndex(2).getName();
+        String thu = randomMenus.findMenuByIndex(3).getName();
+        String fri = randomMenus.findMenuByIndex(4).getName();
+
+        return String.format("[ %s | %s | %s | %s | %s | %s ]", name, mon, tue, wed, thu, fri);
     }
 }

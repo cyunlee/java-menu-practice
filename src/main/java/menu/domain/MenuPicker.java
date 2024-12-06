@@ -13,7 +13,7 @@ public class MenuPicker {
     public List<String> pickRandomCategories() {
         List<String> randomCategories = new ArrayList<>();
         for (int i=0; i<5; i++) {
-            String category = categories.get(Randoms.pickNumberInRange(1,5));
+            String category = categories.get(Randoms.pickNumberInRange(1,5)-1);
             randomCategories.add(category); // 한식 한식 한식 양식 중식
         }
         List<String> distinctCategories = randomCategories.stream().distinct().collect(Collectors.toList());

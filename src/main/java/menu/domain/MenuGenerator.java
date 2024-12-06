@@ -27,11 +27,14 @@ public class MenuGenerator {
         return menus;
     }
 
-    public Menus generateMenuFromString(List<String> input) {
+    public Menus generateMenuFromString(List<String> input, List<Menus> allMenus) {
         Menus menus = new Menus();
         for (String s : input) {
-            Menu menu = menus.findMenu(s);
-            if (menu!=null) {
+            if (s==null || s.isEmpty()) {
+                return menus;
+            }
+            for (Menus allMenu : allMenus) {
+                Menu menu = allMenu.findMenuByName(s);
                 menus.addMenu(menu);
             }
         }
