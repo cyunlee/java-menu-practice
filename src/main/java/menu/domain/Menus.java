@@ -12,6 +12,10 @@ public class Menus implements Iterable<Menu> {
         return menus;
     }
 
+    public int getSize() {
+        return menus.size();
+    }
+
     @Override
     public Iterator<Menu> iterator() {
         return menus.iterator();
