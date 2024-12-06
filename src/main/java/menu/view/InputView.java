@@ -11,8 +11,12 @@ public class InputView {
 
     public List<String> readCoachNames() {
         String input = Console.readLine();
+        return inputParser.parseInput(input);
+    }
 
-        return input;
+    public List<String> cantEatMenu() {
+        String input = Console.readLine();
+        return inputParser.parseInput(input);
     }
 
 
